@@ -1,4 +1,4 @@
-use master
+use LectureExperience
 
 /* 创建数据库 */
 create table Student
