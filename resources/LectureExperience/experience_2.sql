@@ -2,7 +2,7 @@ use LectureExperience
 
 /**
  *定义选课数据库的表 course和sc,数据结构参照图2-1.。每个关系都需定义主码。
- *要求course表中的cpno参照 cno属性列中的数据,
+ *要求course表中的cpno参照cno属性列中的数据,
  *sc表中的sno和cno参照student和course中的相关数据。
  */
 create table Course
