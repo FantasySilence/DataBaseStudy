@@ -10,18 +10,30 @@ create table Course
     Cno     char(5) primary key not null,
     Cname   nvarchar(30)        not null,
     Ccredit smallint            not null,
-    Cpno    char(5) references Course (Cno)
+    Cpno    char(5)
 )
 
 create table SC
 (
-    Sno           char(8)  not null references Student (Sno),
-    Cno           char(5)  not null references Course (Cno),
+    Sno           char(8)  not null,
+    Cno           char(5)  not null,
     Grade         smallint not null,
     Semester      char(5)  not null,
     Teachingclass char(8)  not null
         primary key (Sno, Cno)
 )
+
+alter table Course
+    add constraint FK_Course_Cpno
+        foreign key (Cpno) references Course
+
+alter table SC
+    add constraint FK_SC_Sno
+        foreign key (Sno) references Student
+alter table SC
+    add constraint FK_SC_Cno
+        foreign key (Cno) references Course
+
 
 /**
  *向表 course和sc插入数据。数据完全参照2-1
@@ -60,10 +72,10 @@ from SC
  *更新李勇的学号
  */
 alter table SC
-    drop constraint FK__SC__Sno__534D60F1
+    drop constraint FK_SC_Sno
 
 alter table SC
-    nocheck constraint FK__SC__Sno__534D60F1
+    nocheck constraint FK_SC_Sno
 
 update Student
 set Sno = '20180008'
@@ -74,20 +86,20 @@ set Sno = '20180008'
 where Sno = '20180001'
 
 alter table SC
-    check constraint FK__SC__Sno__534D60F1
+    check constraint FK_SC_Sno
 
 alter table SC
-    add constraint FK__SC__Sno__534D60F1 foreign key (Sno)
+    add constraint FK_SC_Sno foreign key (Sno)
         references Student (Sno)
 
 /**
  * 删除李勇的记录
  */
 alter table SC
-    drop constraint FK__SC__Sno__534D60F1
+    drop constraint FK_SC_Sno
 
 alter table SC
-    nocheck constraint FK__SC__Sno__534D60F1
+    nocheck constraint FK_SC_Sno
 
 delete
 from SC
@@ -98,24 +110,24 @@ from Student
 where Sname = N'李勇'
 
 alter table SC
-    check constraint FK__SC__Sno__534D60F1
+    check constraint FK_SC_Sno
 
 alter table SC
-    add constraint FK__SC__Sno__534D60F1 foreign key (Sno)
+    add constraint FK_SC_Sno foreign key (Sno)
         references Student (Sno)
 
 /**
  * 删除数据库课程的记录
  */
 alter table SC
-    drop constraint FK__SC__Cno__5441852A
+    drop constraint FK_SC_Cno
 alter table Course
-    drop constraint FK__Course__Cpno__49C3F6B7
+    drop constraint FK_Course_Cpno
 
 alter table SC
-    nocheck constraint FK__SC__Cno__5441852A
+    nocheck constraint FK_SC_Cno
 alter table Course
-    nocheck constraint FK__Course__Cpno__49C3F6B7
+    nocheck constraint FK_Course_Cpno
 
 delete
 from Course
@@ -123,15 +135,15 @@ where Cno = '81003'
    or Cpno = '81003'
 
 alter table SC
-    check constraint FK__SC__Cno__5441852A
+    check constraint FK_SC_Cno
 alter table Course
-    check constraint FK__Course__Cpno__49C3F6B7
+    check constraint FK_Course_Cpno
 
 alter table SC
-    add constraint FK__SC__Cno__5441852A foreign key (Cno)
+    add constraint FK_SC_Cno foreign key (Cno)
         references Course (Cno)
 alter table Course
-    add constraint FK__Course__Cpno__49C foreign key (Cpno)
+    add constraint FK_Course_Cpno foreign key (Cpno)
         references Course (Cno)
 
 /**
