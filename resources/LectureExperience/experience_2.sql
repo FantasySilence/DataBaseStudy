@@ -151,7 +151,8 @@ alter table Course
  */
 create index scind on SC (Sno asc, Cno desc)
 
-select * from sys.indexes
+select *
+from sys.indexes
 where object_id = object_id('SC')
 
 drop index scind on SC
