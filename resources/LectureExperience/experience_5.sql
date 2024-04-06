@@ -7,7 +7,10 @@ where Sno in (select Sno from SC where Grade >= 90)
 
 select Sno, Sname
 from Student
-where exists (select * from SC where SC.Sno = Student.Sno and Grade >= 90)
+where exists (select *
+              from SC
+              where SC.Sno = Student.Sno
+                and Grade >= 90)
 
 /* 找出项目J2使用的零件名称，数量 */
 select pname, qty
@@ -20,25 +23,33 @@ select distinct jname
 from j
 where jno in (select jno
               from spj
-              where sno in (select sno from s where city = N'上海'))
+              where sno in (select sno
+                            from s
+                            where city = N'上海'))
 
 select distinct jname
 from j
 where exists(select *
              from spj
              where spj.jno = j.jno
-               and sno in (select sno from s where city = N'上海'))
+               and sno in (select sno
+                           from s
+                           where city = N'上海'))
 
 /* 找出没有使用天津生产的零件的工程代码 */
 select distinct jno
 from j
 where jno not in (select jno
                   from spj
-                  where sno in (select sno from s where city = N'天津'))
+                  where sno in (select sno
+                                from s
+                                where city = N'天津'))
 
 select distinct jno
 from j
 where not exists(select *
                  from spj
                  where spj.jno = j.jno
-                   and sno in (select sno from s where city = N'天津'))
+                   and sno in (select sno
+                               from s
+                               where city = N'天津'))
